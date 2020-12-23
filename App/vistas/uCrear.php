@@ -5,18 +5,18 @@
 ?>
 <h1>Crear Usuario</h1>
 <form method="post" action="index.php?guardar-usuario">
-    <div class="container">
-    <input class="form-control mb-2" type="text" name="nombres" placeholder="Ingrese nombres">
-    <input class="form-control mb-2" type="text" name="apellidos" placeholder="Ingrese apellidos">
-    <input class="form-control mb-2" type="number" name="codigo" placeholder="Ingrese Codigo/DNI">
-    <input class="form-control mb-2" type="password" name="password" placeholder="Ingrese Contraseña">
-    <select class="form-control mb-2" name="tipo">
+    <input type="text" name="nombres" placeholder="Ingrese nombres"><br>
+    <input type="text" name="apellidos" placeholder="Ingrese apellidos"><br>
+    <input type="number" name="codigo" id="codigo" placeholder="Ingrese Codigo/DNI"><br>
+    <input type="password" name="password" placeholder="Ingrese Contraseña"><br>
+    <select name="tipo">
         <option value="estudiante">Estudiante</option>
         <option value="profesor">Profesor</option>
         <option value="administrador">Administrador</option>
-    </select>
-    <input class="btn btn-primary" type="submit" name="submit" value="Guardar">
-    </div>
+    </select><br>
+    <input type="submit" name="submit" value="Guardar">
+    <button id="btnValidar">Validar</button>
+    <div id="result"></div>
 </form>
 <?php
 if(isset($_POST["submit"])){
@@ -30,4 +30,16 @@ if(isset($_POST["submit"])){
     echo $controladorUsuario->crearUsuario($nombres, $apellidos, $codigo, $password, $tipo);
 }
 include_once "app/vistas/layout/footer.php";
-
+?>
+<script>
+    $("#btnValidar").Click(function(){
+    var codigo = $("#codigo").val();
+    $.post("index.php?validar",
+        {
+            codigo: codigo
+        },
+        function (data,status){
+        alert(data);
+        });
+    });
+</script>
